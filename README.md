@@ -15,6 +15,21 @@ out/app
 
 Open http://localhost:8000 in your browser.
 
+### Database migration
+
+`out/db` creates the `greetings` table if needed and sets its `created_at`
+default to `NOW()`, including for existing tables imported from applications
+that supply timestamps through an ORM. It can be run repeatedly and does not
+change existing rows or timestamps.
+
+To run the PostgreSQL integration tests, provide a dedicated local test database.
+The tests use temporary schemas inside transactions that are rolled back:
+
+```bash
+TEST_DATABASE_URL='postgres://localhost:5432/go_starter_test?sslmode=disable' \
+  go test ./cmd/db -run TestMigrationPostgres -v
+```
+
 ## Deploy to Kamui Platform
 
 ### Dashboard Settings
